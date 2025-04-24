@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,15 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bienvenido a CornerPro</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-br from-gray-100 to-white min-h-screen flex items-center justify-center">
-  <div class="bg-white p-8 sm:p-10 rounded-2xl shadow-xl w-full max-w-sm sm:max-w-md text-center">
+<body class="bg-gradient-to-br from-gray-100 to-white flex items-center justify-center min-h-screen">
+  <div class="bg-white p-10 rounded-3xl shadow-xl text-center w-full max-w-md">
     <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="mx-auto mb-6 w-24">
-    <h1 class="text-3xl font-extrabold text-blue-900 tracking-tight drop-shadow-sm mb-2">Bienvenido a CornerPro</h1>
-    <p class="text-gray-600 text-sm mb-6">Gestiona tus inversiones deportivas de forma inteligente</p>
-    <div class="flex flex-col sm:flex-row gap-4">
-      <a href="/login?tipo=admin" class="bg-blue-900 hover:bg-blue-800 text-white py-3 px-6 rounded-lg font-semibold w-full shadow-md transition-all">Ingreso Administrador</a>
-      <a href="/login?tipo=inversor" class="bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-6 rounded-lg font-semibold w-full shadow-md transition-all">Ingreso Inversor</a>
+    <h1 class="text-2xl md:text-3xl font-bold text-indigo-900 mb-2 tracking-tight">Bienvenido a <span class="text-yellow-500">CornerPro</span></h1>
+    <p class="text-gray-600 mb-8 text-sm">Gestiona tus inversiones deportivas de forma inteligente</p>
+
+    <div class="flex flex-col md:flex-row justify-center gap-4">
+      <a href="/login?tipo=admin" class="bg-indigo-900 hover:bg-indigo-800 text-white px-5 py-2 rounded-lg font-semibold text-sm shadow transition-all duration-200">Ingreso Administrador</a>
+      <a href="/login?tipo=inversor" class="bg-yellow-500 hover:bg-yellow-400 text-white px-5 py-2 rounded-lg font-semibold text-sm shadow transition-all duration-200">Ingreso Inversor</a>
     </div>
   </div>
 </body>
