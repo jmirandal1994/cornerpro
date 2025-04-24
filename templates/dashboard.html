@@ -30,7 +30,7 @@
   {% endif %}
 
   <div class="flex justify-between items-center mb-6">
-    <img src="{{ url_for('static', filename='logo.png') }}" class="w-20 object-contain" alt="Logo CornerPro">
+    <img src="{{ url_for('static', filename='logo-pro.png') }}" class="w-20 object-contain" alt="Logo CornerPro">
     <form method="POST" action="/logout">
       <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Cerrar sesión</button>
     </form>
@@ -44,7 +44,7 @@
   <div class="bg-gradient-to-br from-[#d4a215] to-[#f8e46b] text-white rounded-xl shadow-2xl px-6 py-5 mb-10 w-full max-w-md mx-auto relative">
     <div class="flex justify-between items-center mb-3">
       <div class="rounded-full p-1 shadow-xl">
-        <img src="{{ url_for('static', filename='logo-transparent.png') }}" class="w-12 h-12 object-contain">
+        <img src="{{ url_for('static', filename='logo-pro.png') }}" class="w-12 h-12 object-contain">
       </div>
       <div class="flex items-center space-x-2">
         <span class="text-sm font-bold tracking-wide text-white drop-shadow tarjeta-texto">GOLD</span>
@@ -59,6 +59,7 @@
     <p class="text-2xl font-bold text-white tarjeta-texto">$ {{ "{:,.0f}".format(monto_actual).replace(",", ".") }}</p>
   </div>
 
+  <!-- Aquí empieza el resto del dashboard completo (sin includes) -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
     <div class="bg-white border rounded-lg p-4 shadow text-center">
       <p class="text-xs text-gray-500">Capital Inicial</p>
