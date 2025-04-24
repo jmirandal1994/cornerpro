@@ -9,7 +9,6 @@
 </head>
 <body class="bg-white p-4 max-w-5xl mx-auto">
 
-  <!-- Modal de bienvenida (una vez) -->
   <script>
     if (!localStorage.getItem("bienvenidaMostrada")) {
       alert("🎉 Bienvenido/a a CornerPro. Desde aquí podrás monitorear tus inversiones y enviar solicitudes.");
@@ -17,14 +16,12 @@
     }
   </script>
 
-  <!-- Notificación -->
   {% if mensaje_enviado %}
     <div class="bg-green-100 text-green-800 border border-green-300 px-4 py-3 rounded mb-6 shadow text-sm text-center">
       {{ mensaje_enviado }}
     </div>
   {% endif %}
 
-  <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <img src="{{ url_for('static', filename='logo.png') }}" class="w-20" alt="Logo CornerPro">
     <form method="POST" action="/logout">
@@ -32,26 +29,29 @@
     </form>
   </div>
 
-  <!-- Título -->
-  <h1 class="text-2xl font-bold text-yellow-600 mb-4">
+  <h1 class="text-2xl font-bold text-yellow-600 mb-6">
     Bienvenido/a a tu panel de inversión, <span class="text-indigo-900">{{ username }}</span>
   </h1>
 
-  <!-- Tarjeta virtual estilo GOLD -->
-  <div class="bg-gradient-to-r from-yellow-400 to-yellow-300 p-6 rounded-xl shadow-lg text-white relative mb-10">
-    <div class="absolute top-4 right-4 flex items-center space-x-2">
-      <span class="text-xs font-semibold bg-yellow-700 text-white px-2 py-1 rounded-full">GOLD</span>
-      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="w-8 h-8">
+  <!-- Tarjeta CornerPro estilo profesional -->
+  <div class="relative bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-xl shadow-lg px-6 py-6 mb-10 overflow-hidden">
+    <div class="absolute top-4 left-4">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="CornerPro Logo" class="w-16 h-16">
     </div>
-    <h2 class="text-lg font-semibold">Tarjeta CornerPro</h2>
-    <p class="text-sm mt-1">Usuario: <span class="font-bold">{{ username }}</span></p>
-    <p class="text-sm">Fecha de registro: {{ fecha_creacion }}</p>
-    <div class="text-2xl tracking-widest mt-4 mb-2">**** **** **** {{ username[-4:] }}</div>
-    <p class="text-sm text-white/80">Monto actual</p>
-    <p class="text-xl font-semibold">$ {{ "{:,.0f}".format(monto_actual).replace(",", ".") }} CLP</p>
+    <div class="absolute top-4 right-4 flex items-center space-x-2">
+      <span class="text-sm font-bold bg-yellow-800 text-white px-3 py-1 rounded-full">GOLD</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard Logo" class="w-8 h-8">
+    </div>
+    <div class="pt-20 pb-6 text-white">
+      <h2 class="text-lg font-semibold">Tarjeta CornerPro</h2>
+      <p class="text-sm">Usuario: <span class="font-bold">{{ username }}</span></p>
+      <p class="text-sm mb-4">Fecha de registro: {{ fecha_creacion }}</p>
+      <div class="text-xl tracking-widest font-mono">**** **** **** {{ username[-4:] }}</div>
+      <p class="mt-2 text-sm text-white/80">Monto actual</p>
+      <p class="text-2xl font-bold">$ {{ "{:,.0f}".format(monto_actual).replace(",", ".") }} CLP</p>
+    </div>
   </div>
 
-  <!-- Tarjetas resumen -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
     <div class="bg-white border rounded-lg p-4 shadow text-center">
       <p class="text-xs text-gray-500">Capital Inicial</p>
@@ -71,7 +71,6 @@
     </div>
   </div>
 
-  <!-- Progreso circular -->
   <div class="flex justify-center mb-10">
     <div class="relative w-24 h-24">
       <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
@@ -88,7 +87,6 @@
     </div>
   </div>
 
-  <!-- Chart y tabla -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="bg-gray-100 p-6 rounded shadow">
       <h2 class="font-semibold text-gray-700 mb-2">Crecimiento de Inversión ({{ fecha_creacion }} - Hasta la fecha)</h2>
@@ -119,7 +117,6 @@
     </div>
   </div>
 
-  <!-- Formularios -->
   <div class="mt-10 space-y-6">
     <form method="POST" class="bg-gray-50 p-6 rounded shadow space-y-4">
       <input type="hidden" name="tipo" value="consulta">
