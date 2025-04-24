@@ -7,9 +7,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-white p-4 max-w-4xl mx-auto">
+<body class="bg-white p-4 max-w-5xl mx-auto">
 
-  <!-- Modal bienvenida -->
+  <!-- Modal de bienvenida (una vez) -->
   <script>
     if (!localStorage.getItem("bienvenidaMostrada")) {
       alert("🎉 Bienvenido/a a CornerPro. Desde aquí podrás monitorear tus inversiones y enviar solicitudes.");
@@ -17,6 +17,7 @@
     }
   </script>
 
+  <!-- Notificación -->
   {% if mensaje_enviado %}
     <div class="bg-green-100 text-green-800 border border-green-300 px-4 py-3 rounded mb-6 shadow text-sm text-center">
       {{ mensaje_enviado }}
@@ -32,27 +33,22 @@
   </div>
 
   <!-- Título -->
-  <h1 class="text-2xl font-bold text-yellow-600 mb-6">
+  <h1 class="text-2xl font-bold text-yellow-600 mb-4">
     Bienvenido/a a tu panel de inversión, <span class="text-indigo-900">{{ username }}</span>
   </h1>
 
-  <!-- Tarjeta virtual estilo CornerPro -->
-  <div class="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white rounded-2xl p-6 shadow-lg mb-10">
-    <div class="flex justify-between items-center">
-      <div>
-        <h2 class="text-xl font-semibold mb-1">Tarjeta CornerPro</h2>
-        <p class="text-xs">Usuario: {{ username }}</p>
-        <p class="text-xs">Fecha de registro: {{ fecha_creacion }}</p>
-      </div>
-      <img src="{{ url_for('static', filename='chip.png') }}" alt="chip" class="w-8 h-8">
+  <!-- Tarjeta virtual estilo GOLD -->
+  <div class="bg-gradient-to-r from-yellow-400 to-yellow-300 p-6 rounded-xl shadow-lg text-white relative mb-10">
+    <div class="absolute top-4 right-4 flex items-center space-x-2">
+      <span class="text-xs font-semibold bg-yellow-700 text-white px-2 py-1 rounded-full">GOLD</span>
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="w-8 h-8">
     </div>
-    <div class="mt-4">
-      <p class="tracking-widest text-lg font-mono">**** **** **** {{ username[-4:] if username|length > 4 else '1234' }}</p>
-    </div>
-    <div class="mt-2 flex justify-between text-xs">
-      <span>Monto actual</span>
-      <span>$ {{ "{:,.0f}".format(monto_actual).replace(",", ".") }} CLP</span>
-    </div>
+    <h2 class="text-lg font-semibold">Tarjeta CornerPro</h2>
+    <p class="text-sm mt-1">Usuario: <span class="font-bold">{{ username }}</span></p>
+    <p class="text-sm">Fecha de registro: {{ fecha_creacion }}</p>
+    <div class="text-2xl tracking-widest mt-4 mb-2">**** **** **** {{ username[-4:] }}</div>
+    <p class="text-sm text-white/80">Monto actual</p>
+    <p class="text-xl font-semibold">$ {{ "{:,.0f}".format(monto_actual).replace(",", ".") }} CLP</p>
   </div>
 
   <!-- Tarjetas resumen -->
@@ -75,20 +71,24 @@
     </div>
   </div>
 
-  <!-- Progreso de crecimiento (gráfico circular) -->
+  <!-- Progreso circular -->
   <div class="flex justify-center mb-10">
-    <div class="relative w-32 h-32">
-      <svg class="absolute top-0 left-0 w-full h-full">
-        <circle class="text-gray-200" stroke-width="8" stroke="currentColor" fill="transparent" r="48" cx="64" cy="64" />
-        <circle class="text-yellow-500" stroke-width="8" stroke-dasharray="301.6" stroke-dashoffset="{{ 301.6 - (301.6 * (porcentaje_crecimiento | float) / 100 if porcentaje_crecimiento | float < 100 else 301.6) }}" stroke-linecap="round" stroke="currentColor" fill="transparent" r="48" cx="64" cy="64" />
+    <div class="relative w-24 h-24">
+      <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+        <path class="text-gray-200" d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="2.5" stroke="currentColor"/>
+        <path class="text-yellow-500" d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831" fill="none"
+          stroke-width="2.5" stroke-dasharray="{{ porcentaje_crecimiento }}, 100" stroke="currentColor" />
       </svg>
-      <div class="absolute inset-0 flex items-center justify-center">
-        <span class="text-sm font-semibold text-gray-800">{{ porcentaje_crecimiento }}%</span>
+      <div class="absolute inset-0 flex items-center justify-center text-sm font-semibold text-gray-700">
+        {{ porcentaje_crecimiento }}%
       </div>
     </div>
   </div>
 
-  <!-- Resto del dashboard -->
+  <!-- Chart y tabla -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="bg-gray-100 p-6 rounded shadow">
       <h2 class="font-semibold text-gray-700 mb-2">Crecimiento de Inversión ({{ fecha_creacion }} - Hasta la fecha)</h2>
@@ -127,11 +127,13 @@
       <textarea name="mensaje" placeholder="Escribe tu consulta aquí..." class="w-full p-3 border border-gray-300 rounded" rows="4"></textarea>
       <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Enviar Consulta</button>
     </form>
+
     <form method="POST" class="bg-green-50 p-6 rounded shadow">
       <input type="hidden" name="tipo" value="incrementar">
       <h2 class="text-lg font-semibold text-gray-700 mb-2">¿Deseas incrementar tu capital?</h2>
       <button type="submit" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Solicitar Incremento</button>
     </form>
+
     <form method="POST" class="bg-yellow-50 p-6 rounded shadow">
       <input type="hidden" name="tipo" value="retiro">
       <h2 class="text-lg font-semibold text-gray-700 mb-2">¿Deseas solicitar un retiro?</h2>
@@ -139,7 +141,6 @@
     </form>
   </div>
 
-  <!-- Chart.js -->
   <script>
     const ctx = document.getElementById('growthChart').getContext('2d');
     new Chart(ctx, {
@@ -162,8 +163,10 @@
       }
     });
   </script>
+
 </body>
 </html>
+
 
 
 
