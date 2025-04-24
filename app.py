@@ -5,6 +5,7 @@ from datetime import datetime
 import smtplib
 from email.message import EmailMessage
 
+# Cargar variables de entorno
 load_dotenv()
 
 from supabase_client import supabase
@@ -12,7 +13,7 @@ from supabase_client import supabase
 app = Flask(__name__)
 app.secret_key = 'clave_secreta_segura'
 
-# ENV para correos
+# Variables para envío de correos
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_DESTINO = os.getenv("EMAIL_DESTINO")
@@ -106,7 +107,10 @@ def dashboard():
             cuerpo += "El usuario ha solicitado un retiro de fondos."
 
         enviar_correo(asunto, cuerpo)
+        session['mensaje_enviado'] = "✅ ¡Tu solicitud fue enviada correctamente!"
         return redirect('/dashboard')
+
+    mensaje_enviado = session.pop('mensaje_enviado', None)
 
     return render_template('dashboard.html',
         username=session['username'],
@@ -114,7 +118,8 @@ def dashboard():
         monto_actual=monto_actual,
         partidos_invertidos=partidos_invertidos,
         porcentaje_crecimiento=porcentaje_crecimiento,
-        fecha_creacion=fecha_creacion
+        fecha_creacion=fecha_creacion,
+        mensaje_enviado=mensaje_enviado
     )
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -149,3 +154,4 @@ def register():
 def logout():
     session.clear()
     return redirect('/')
+
