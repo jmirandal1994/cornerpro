@@ -1,30 +1,34 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CornerPro | Registrar Usuario</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Registro</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
 </head>
-<body class="bg-white flex items-center justify-center min-h-screen">
-  <div class="bg-gray-50 p-8 rounded shadow-md w-full max-w-sm text-center">
-    <img src="{{ url_for('static', filename='logo.png') }}" class="w-24 mx-auto mb-4" alt="Logo CornerPro">
-    <h2 class="text-2xl font-bold mb-6 text-blue-600">Crear Usuario</h2>
-    <form method="POST">
-      <input type="text" name="username" placeholder="Usuario" required class="w-full px-4 py-2 border rounded mb-4">
-      <input type="password" name="password" placeholder="Contraseña" required class="w-full px-4 py-2 border rounded mb-4">
-      <select name="role" required class="w-full px-4 py-2 border rounded mb-6 text-gray-700">
-        <option value="">Selecciona un rol</option>
-        <option value="inversor">Inversor</option>
-        <option value="admin">Administrador</option>
-      </select>
-      <button type="submit" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-        Registrar
-      </button>
+<body class="bg-gradient-to-br from-gray-100 to-white min-h-screen flex items-center justify-center">
+  <div class="bg-white p-8 sm:p-10 rounded-2xl shadow-xl w-full max-w-sm sm:max-w-md text-center">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="mx-auto w-24 mb-6">
+    <h1 class="text-3xl font-extrabold text-blue-900 drop-shadow-sm mb-2">Crear cuenta</h1>
+    <p class="text-gray-600 text-sm mb-6">Registra tu acceso a CornerPro</p>
+    <form method="POST" class="space-y-4 text-left">
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Usuario</label>
+        <input type="text" name="username" required class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Contraseña</label>
+        <input type="password" name="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Rol</label>
+        <select name="role" class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          <option value="admin">Administrador</option>
+          <option value="inversor">Inversor</option>
+        </select>
+      </div>
+      <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg shadow-lg transition-all">Registrarse</button>
     </form>
   </div>
 </body>
