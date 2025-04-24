@@ -36,16 +36,18 @@
   <!-- Tarjeta GOLD refinada -->
   <div class="bg-gradient-to-br from-[#d4a215] to-[#f8e46b] text-white rounded-xl shadow-2xl px-6 py-5 mb-10 w-full max-w-md mx-auto relative">
     <div class="flex justify-between items-center mb-3">
-      <img src="{{ url_for('static', filename='logo.png') }}" class="w-12 h-12 object-contain bg-white rounded-full p-1" style="filter: drop-shadow(0 0 3px rgba(0,0,0,0.3));">
+      <div class="bg-white rounded-full p-1 shadow-lg">
+        <img src="{{ url_for('static', filename='logo.png') }}" class="w-12 h-12 object-contain" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.25));">
+      </div>
       <div class="flex items-center space-x-2">
-        <span class="text-sm font-bold">GOLD</span>
+        <span class="text-sm font-bold tracking-wide text-white/90">GOLD</span>
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" class="w-10 h-6 object-contain" alt="Mastercard">
       </div>
     </div>
     <h2 class="text-lg font-bold">Tarjeta CornerPro</h2>
     <p class="text-sm">Usuario: <span class="font-semibold">{{ username }}</span></p>
     <p class="text-sm">Fecha de registro: {{ fecha_creacion }}</p>
-    <p class="text-xl font-mono tracking-widest my-2">**** **** **** {{ username[-4:] }}</p>
+    <p class="text-xl font-mono tracking-widest my-2">XXXX XXXX XXXX {{ fecha_creacion[-4:] }}</p>
     <p class="text-sm text-white/80">Monto actual</p>
     <p class="text-2xl font-bold text-white">$ {{ "{:,.0f}".format(monto_actual).replace(",", ".") }}</p>
   </div>
