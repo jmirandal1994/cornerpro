@@ -8,12 +8,23 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-white p-4 max-w-4xl mx-auto">
+
+  <!-- Modal de bienvenida (una vez) -->
+  <script>
+    if (!localStorage.getItem("bienvenidaMostrada")) {
+      alert("🎉 Bienvenido/a a CornerPro. Desde aquí podrás monitorear tus inversiones y enviar solicitudes.");
+      localStorage.setItem("bienvenidaMostrada", true);
+    }
+  </script>
+
+  <!-- Notificación -->
   {% if mensaje_enviado %}
     <div class="bg-green-100 text-green-800 border border-green-300 px-4 py-3 rounded mb-6 shadow text-sm text-center">
       {{ mensaje_enviado }}
     </div>
   {% endif %}
 
+  <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <img src="{{ url_for('static', filename='logo.png') }}" class="w-20" alt="Logo CornerPro">
     <form method="POST" action="/logout">
@@ -21,16 +32,48 @@
     </form>
   </div>
 
-  <h1 class="text-2xl font-bold text-yellow-600 mb-4">
+  <!-- Título -->
+  <h1 class="text-2xl font-bold text-yellow-600 mb-6">
     Bienvenido/a a tu panel de inversión, <span class="text-indigo-900">{{ username }}</span>
   </h1>
 
+  <!-- Tarjetas resumen -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+    <div class="bg-white border rounded-lg p-4 shadow text-center">
+      <p class="text-xs text-gray-500">Capital Inicial</p>
+      <p class="text-lg font-semibold text-blue-900">$ {{ "{:,.0f}".format(monto_inicial).replace(",", ".") }}</p>
+    </div>
+    <div class="bg-white border rounded-lg p-4 shadow text-center">
+      <p class="text-xs text-gray-500">Monto Actual</p>
+      <p class="text-lg font-semibold text-green-700">$ {{ "{:,.0f}".format(monto_actual).replace(",", ".") }}</p>
+    </div>
+    <div class="bg-white border rounded-lg p-4 shadow text-center">
+      <p class="text-xs text-gray-500">Partidos</p>
+      <p class="text-lg font-semibold text-gray-800">{{ partidos_invertidos }}</p>
+    </div>
+    <div class="bg-white border rounded-lg p-4 shadow text-center">
+      <p class="text-xs text-gray-500">Crecimiento</p>
+      <p class="text-lg font-semibold text-yellow-600">{{ porcentaje_crecimiento }}%</p>
+    </div>
+  </div>
+
+  <!-- Barra de progreso -->
+  <div class="mb-10">
+    <h2 class="text-sm font-semibold text-gray-700 mb-2">Progreso de crecimiento</h2>
+    <div class="w-full bg-gray-200 rounded-full h-4">
+      <div class="bg-yellow-500 h-4 rounded-full transition-all" style="width: {{ porcentaje_crecimiento }}%;"></div>
+    </div>
+  </div>
+
+  <!-- Secciones principales -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Gráfico -->
     <div class="bg-gray-100 p-6 rounded shadow">
       <h2 class="font-semibold text-gray-700 mb-2">Crecimiento de Inversión ({{ fecha_creacion }} - Hasta la fecha)</h2>
       <canvas id="growthChart"></canvas>
     </div>
 
+    <!-- Tabla -->
     <div class="bg-gray-100 p-6 rounded shadow">
       <h2 class="font-semibold text-gray-700 mb-4">Datos de tu Inversión</h2>
       <table class="w-full text-sm text-left text-gray-700 border border-gray-300 rounded overflow-hidden shadow">
@@ -56,7 +99,9 @@
     </div>
   </div>
 
+  <!-- Formularios -->
   <div class="mt-10 space-y-6">
+    <!-- Consulta -->
     <form method="POST" class="bg-gray-50 p-6 rounded shadow space-y-4">
       <input type="hidden" name="tipo" value="consulta">
       <h2 class="text-lg font-semibold text-gray-700">¿Tienes dudas o consultas?</h2>
@@ -64,12 +109,14 @@
       <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Enviar Consulta</button>
     </form>
 
+    <!-- Incrementar -->
     <form method="POST" class="bg-green-50 p-6 rounded shadow">
       <input type="hidden" name="tipo" value="incrementar">
       <h2 class="text-lg font-semibold text-gray-700 mb-2">¿Deseas incrementar tu capital?</h2>
       <button type="submit" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Solicitar Incremento</button>
     </form>
 
+    <!-- Retiro -->
     <form method="POST" class="bg-yellow-50 p-6 rounded shadow">
       <input type="hidden" name="tipo" value="retiro">
       <h2 class="text-lg font-semibold text-gray-700 mb-2">¿Deseas solicitar un retiro?</h2>
@@ -94,11 +141,12 @@
       },
       options: {
         responsive: true,
-        plugins: { legend: { display: true } },
+        plugins: { legend: { display: false } },
         scales: { y: { beginAtZero: false } }
       }
     });
   </script>
 </body>
 </html>
+
 
