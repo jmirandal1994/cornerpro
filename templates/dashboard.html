@@ -23,7 +23,7 @@
   {% endif %}
 
   <div class="flex justify-between items-center mb-6">
-    <img src="{{ url_for('static', filename='logo.png') }}" class="w-20" alt="Logo CornerPro">
+    <img src="{{ url_for('static', filename='logo.png') }}" class="w-20 object-contain" alt="Logo CornerPro">
     <form method="POST" action="/logout">
       <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Cerrar sesión</button>
     </form>
@@ -33,24 +33,24 @@
     Bienvenido/a a tu panel de inversión, <span class="text-indigo-900">{{ username }}</span>
   </h1>
 
-  <!-- Tarjeta CornerPro estilo profesional -->
-  <div class="relative bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-xl shadow-lg px-6 py-6 mb-10 overflow-hidden">
-    <div class="absolute top-4 left-4">
-      <img src="{{ url_for('static', filename='logo.png') }}" alt="CornerPro Logo" class="w-16 h-16">
+  <!-- Tarjeta GOLD refinada -->
+  <div class="bg-gradient-to-br from-[#d4a215] to-[#f8e46b] text-white rounded-xl shadow-2xl px-6 py-5 mb-10 w-full max-w-md mx-auto relative">
+    <div class="flex justify-between items-center mb-3">
+      <img src="{{ url_for('static', filename='logo.png') }}" class="w-12 h-12 object-contain bg-white rounded-full p-1" style="filter: drop-shadow(0 0 3px rgba(0,0,0,0.3));">
+      <div class="flex items-center space-x-2">
+        <span class="text-sm font-bold">GOLD</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" class="w-10 h-6 object-contain" alt="Mastercard">
+      </div>
     </div>
-    <div class="absolute top-4 right-4 flex items-center space-x-2">
-      <span class="text-sm font-bold bg-yellow-800 text-white px-3 py-1 rounded-full">GOLD</span>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard Logo" class="w-8 h-8">
-    </div>
-    <div class="pt-20 pb-6 text-white">
-      <h2 class="text-lg font-semibold">Tarjeta CornerPro</h2>
-      <p class="text-sm">Usuario: <span class="font-bold">{{ username }}</span></p>
-      <p class="text-sm mb-4">Fecha de registro: {{ fecha_creacion }}</p>
-      <div class="text-xl tracking-widest font-mono">**** **** **** {{ username[-4:] }}</div>
-      <p class="mt-2 text-sm text-white/80">Monto actual</p>
-      <p class="text-2xl font-bold">$ {{ "{:,.0f}".format(monto_actual).replace(",", ".") }} CLP</p>
-    </div>
+    <h2 class="text-lg font-bold">Tarjeta CornerPro</h2>
+    <p class="text-sm">Usuario: <span class="font-semibold">{{ username }}</span></p>
+    <p class="text-sm">Fecha de registro: {{ fecha_creacion }}</p>
+    <p class="text-xl font-mono tracking-widest my-2">**** **** **** {{ username[-4:] }}</p>
+    <p class="text-sm text-white/80">Monto actual</p>
+    <p class="text-2xl font-bold text-white">$ {{ "{:,.0f}".format(monto_actual).replace(",", ".") }}</p>
   </div>
+
+  <!-- El resto del dashboard sigue intacto -->
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
     <div class="bg-white border rounded-lg p-4 shadow text-center">
@@ -74,12 +74,8 @@
   <div class="flex justify-center mb-10">
     <div class="relative w-24 h-24">
       <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-        <path class="text-gray-200" d="M18 2.0845
-          a 15.9155 15.9155 0 0 1 0 31.831
-          a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="2.5" stroke="currentColor"/>
-        <path class="text-yellow-500" d="M18 2.0845
-          a 15.9155 15.9155 0 0 1 0 31.831" fill="none"
-          stroke-width="2.5" stroke-dasharray="{{ porcentaje_crecimiento }}, 100" stroke="currentColor" />
+        <path class="text-gray-200" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="2.5" stroke="currentColor"/>
+        <path class="text-yellow-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831" fill="none" stroke-width="2.5" stroke-dasharray="{{ porcentaje_crecimiento }}, 100" stroke="currentColor" />
       </svg>
       <div class="absolute inset-0 flex items-center justify-center text-sm font-semibold text-gray-700">
         {{ porcentaje_crecimiento }}%
@@ -163,6 +159,7 @@
 
 </body>
 </html>
+
 
 
 
