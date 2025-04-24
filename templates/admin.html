@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CornerPro | Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-white min-h-screen p-6">
+  <header class="flex items-center justify-between mb-6">
+    <img src="{{ url_for('static', filename='logo.png') }}" class="w-24" alt="Logo CornerPro">
+    <button class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">Cerrar sesión</button>
+  </header>
+
+  <h1 class="text-3xl font-bold text-blue-600 mb-6">Partidos del día</h1>
+
+  <div class="flex gap-4 mb-6">
+    <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Hoy</button>
+    <button class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300">Mañana</button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-2">
+      <p class="text-lg font-bold text-gray-800">18:00 - Real Madrid vs Barcelona</p>
+      <p class="text-green-600 font-semibold">75% Oportunidad 📈</p>
+    </div>
+    <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-2">
+      <p class="text-lg font-bold text-gray-800">19:30 - Man City vs Liverpool</p>
+      <p class="text-green-600 font-semibold">80% Oportunidad 📈</p>
+    </div>
+    <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-2">
+      <p class="text-lg font-bold text-gray-800">20:00 - Boca Juniors vs River Plate</p>
+      <p class="text-yellow-500 font-semibold">70% Oportunidad 📈</p>
+    </div>
+    <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-2">
+      <p class="text-lg font-bold text-gray-800">21:00 - PSG vs Marsella</p>
+      <p class="text-yellow-500 font-semibold">65% Oportunidad 📈</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CornerPro | Inversor Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-white min-h-screen p-6">
+  <header class="flex items-center justify-between mb-6">
+    <img src="{{ url_for('static', filename='logo.png') }}" class="w-24" alt="Logo CornerPro">
+    <button class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">Cerrar sesión</button>
+  </header>
+
+  <h1 class="text-3xl font-bold text-green-600 mb-8">Bienvenido Rodrigo Oliva</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Gráfico de crecimiento -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow-lg">
+      <h2 class="text-xl font-bold mb-4">Crecimiento de Inversión (Marzo-Abril)</h2>
+      <canvas id="growthChart"></canvas>
+    </div>
+
+    <!-- Tabla de datos -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow-lg">
+      <h2 class="text-xl font-bold mb-4">Datos de tu Inversión</h2>
+      <table class="w-full text-left table-auto">
+        <tbody>
+          <tr class="border-b">
+            <th class="py-2 font-semibold">Monto Inicial:</th>
+            <td class="py-2">$1.000.000 CLP</td>
+          </tr>
+          <tr class="border-b">
+            <th class="py-2 font-semibold">Partidos Invertidos:</th>
+            <td class="py-2">67</td>
+          </tr>
+          <tr class="border-b">
+            <th class="py-2 font-semibold">% de Crecimiento:</th>
+            <td class="py-2">35%</td>
+          </tr>
+          <tr>
+            <th class="py-2 font-semibold">Monto Actual:</th>
+            <td class="py-2">$1.350.000 CLP</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Consultas -->
+  <div class="bg-gray-50 p-6 rounded-lg shadow-lg mt-10">
+    <h2 class="text-xl font-bold mb-4">¿Tienes dudas o consultas?</h2>
+    <form>
+      <textarea class="w-full p-3 border rounded mb-4" rows="4" placeholder="Escribe tu consulta aquí..."></textarea>
+      <div class="flex gap-4 mb-4">
+        <button type="submit" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-lg w-full">Enviar Consulta</button>
+      </div>
+      <div class="flex gap-4">
+        <button type="submit" class="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg">Incrementar Capital</button>
+        <button type="submit" class="flex-1 px-4 py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg">Solicitar Retiro</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Marzo', 'Abril'],
+        datasets: [{
+          label: 'Crecimiento en CLP',
+          data: [1000000, 1350000],
+          borderColor: 'rgba(34,197,94,1)',
+          backgroundColor: 'rgba(34,197,94,0.2)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

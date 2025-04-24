@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-white p-6">
+  <div class="flex justify-between items-center mb-6">
+    <img src="{{ url_for('static', filename='logo.png') }}" class="w-20" alt="Logo CornerPro">
+    <form method="POST" action="/logout">
+      <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Cerrar sesión</button>
+    </form>
+  </div>
+
+  <h1 class="text-2xl font-bold text-yellow-600 mb-4">Bienvenido {{ username }}</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-gray-100 p-6 rounded shadow">
+      <h2 class="font-semibold text-gray-700 mb-2">Crecimiento de Inversión ({{ fecha_creacion }} - Hasta la fecha)</h2>
+      <canvas id="growthChart"></canvas>
+    </div>
+
+    <div class="bg-gray-100 p-6 rounded shadow">
+      <h2 class="font-semibold text-gray-700 mb-4">Datos de tu Inversión</h2>
+      <ul class="text-gray-800 text-sm space-y-2">
+        <li><strong>Monto Inicial:</strong> ${{ monto_inicial }} CLP</li>
+        <li><strong>Partidos Invertidos:</strong> {{ partidos_invertidos }}</li>
+        <li><strong>% de Crecimiento:</strong> <span class="text-yellow-600 font-semibold">{{ porcentaje_crecimiento }}%</span></li>
+        <li><strong>Monto Actual:</strong> ${{ monto_actual }} CLP</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Formularios de acciones del usuario -->
+  <div class="mt-10 space-y-6">
+    <!-- Consulta -->
+    <form method="POST" class="bg-gray-50 p-6 rounded shadow space-y-4">
+      <h2 class="text-lg font-semibold text-gray-700">¿Tienes dudas o consultas?</h2>
+      <textarea name="consulta" placeholder="Escribe tu consulta aquí..." class="w-full p-3 border border-gray-300 rounded" rows="4"></textarea>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Enviar Consulta</button>
+    </form>
+
+    <!-- Solicitud de incremento -->
+    <form method="POST" class="bg-green-50 p-6 rounded shadow">
+      <h2 class="text-lg font-semibold text-gray-700 mb-2">¿Deseas incrementar tu capital?</h2>
+      <button type="submit" name="incrementar" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Solicitar Incremento de Capital</button>
+    </form>
+
+    <!-- Solicitud de retiro -->
+    <form method="POST" class="bg-yellow-50 p-6 rounded shadow">
+      <h2 class="text-lg font-semibold text-gray-700 mb-2">¿Deseas solicitar un retiro?</h2>
+      <button type="submit" name="retiro" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded">Solicitar Retiro</button>
+    </form>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Inicio', 'Hoy'],
+        datasets: [{
+          label: 'Crecimiento en CLP',
+          data: [{{ monto_inicial }}, {{ monto_actual }}],
+          borderColor: '#facc15',
+          backgroundColor: 'rgba(250, 204, 21, 0.2)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: true } },
+        scales: { y: { beginAtZero: false } }
+      }
+    });
+  </script>
+</body>
+</html>
